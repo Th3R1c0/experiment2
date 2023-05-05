@@ -1,0 +1,30 @@
+---
+// export interface Props {
+//   title: string;
+// }
+
+// const { title } = Astro.props;i
+import { cva } from "class-variance-authority";
+const button = cva("px-4 py-2 text-white  rounded-md",{
+    variants: {
+        intent: {
+            primary: 'rounded-md border-white border-2 p-4'
+        }
+    }
+})
+
+const text = cva('', {
+    variants: {
+        type:{
+            header: 'text-white text-5xl font-bold letter-spacing-2'
+        } ,
+    }
+})
+---
+
+<div class="flex items-end w-full h-screen  p-16 bg-cover bg-center bg-[url('/axx.jpg')]">
+<div class="p-16 flex flex-col space-y-8">
+  <h1 class={text({type: "header"})}>Web Development nz</h1>
+  <button class={button({intent: "primary"})}>Request Audit</button>
+</div>
+</div>
