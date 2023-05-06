@@ -1,47 +1,83 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { motion, useAnimate, useAnimationControls } from "framer-motion";
+import {
+  motion,
+  useAnimate,
+  useAnimationControls,
+  Variants,
+} from "framer-motion";
 
 const Cards = () => {
   const [scope, animate] = useAnimate();
-  const [position, setPosition] = React.useState(100);
-  const [progress, play] = React.useState(false);
-  const controls = useAnimationControls();
-  const handleAnimate = () => {
-    setPosition(position + 100);
-    console.log(position);
-  };
 
-  const handleDelayedAnimation = () => {
-    play(true);
-    setTimeout(() => {
-      play(false);
-    }, 1000);
+  const handleClick = () => {
+    animate(scope.current, {
+      width: "100%",
+    });
   };
-
+  const itemVariants: Variants = {
+    open: {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%)",
+      transition: { duration: 0.4 },
+    },
+    closed: {
+      opacity: 1,
+    },
+  };
+  const cardvariant: Variants = {
+    initial: {
+      clipPath: "polygon(0% 0%, 48.25% 0%, 0% 100%, 0% 99%)",
+      zIndex: 10,
+    },
+    open: {
+      zIndex: 100,
+    },
+  };
+  const [active, setActive] = useState(true);
   return (
     // container
-    <div className="w-[200%] overflow-hidden relative flex-1 text-white flex items-center justify-center">
-      {/* inner countainer */}
+    <div className="w-full h-screen text-white  bg-red-200 relative">
+      {/* inner container */}
       <motion.div
-        ref={scope}
-        animate={controls}
-        className="w-[200%]  flex items-center justify-center absolute"
+        variants={cardvariant}
+        animate={active ? "open" : "initial"}
+        onClick={() => setActive(!active)}
+        transition={{ duration: 0.2, type: "spring" }}
+        initial="initial"
+        className="group  p-[10rem] left-0 absolute w-full h-full flex items-start justify-start "
       >
-        {Array(10)
-          .fill(0)
-          .map((i, index) => {
-            return (
-              <div
-                key={index}
-                onClick={handleAnimate}
-                className={`absolute w-[300px] h-[500px] rounded-lg bg-blue-600 text-white flex items-center justify-center font-4xl`}
-              >
-                card 2{" "}
-              </div>
-            );
-          })}
+        <div className="z-50 text-6xl font-bold">Amazon Cloud</div>
+        <img
+          src="/1.jpg"
+          className="group-hover:brightness-[100%] transition-all absolute filter brightness-[40%] left-0 top-0 w-full h-full"
+        />
       </motion.div>
+
+      <div
+        style={{
+          clipPath: "polygon(100% 0%, 48.25% 0%, 0% 100%, 48.25% 100%)",
+        }}
+        className="group p-[10rem] left-0 absolute w-full h-full flex items-center justify-center"
+      >
+        <div className="z-50 text-6xl font-bold">Google Framer</div>
+        <img
+          src="/2.jpg"
+          className="group-hover:brightness-[100%] absolute filter brightness-[40%] left-0 top-0 w-full h-full"
+        />
+      </div>
+
+      <div
+        style={{
+          clipPath: " polygon(100% 0%, 100% 0%, 100% 100%, 48.25% 100%)",
+        }}
+        className="group p-[10rem] left-0 absolute w-full h-full flex items-end justify-end "
+      >
+        <div className="z-50 text-6xl  font-bold">CheryPicked</div>
+        <img
+          src="/3.jpg"
+          className="group-hover:brightness-[100%] absolute filter brightness-[40%] left-0 top-0 w-full h-full"
+        />
+      </div>
     </div>
   );
 };
