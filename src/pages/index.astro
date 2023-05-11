@@ -1,20 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-import HeroSection from "../components/HeroSection.astro";
-import ProjectsSection from "../components/ProjectsSection.astro";
-import TecSection from "../components/TecSection.astro";
-import Headerr from "../partials/Headerr.astro";
 
+import App from '../components/app'
 
 
 ---
 
-<Layout title="web guys">
-    <Headerr />
-	<HeroSection />
-	<ProjectsSection />
-	<TecSection />	
+<Layout title="web guys">	
+	<App client:load />
 </Layout>
 
    
